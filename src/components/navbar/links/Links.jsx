@@ -4,7 +4,7 @@ import styles from "./links.module.css";
 import NavLink from "./navLink/navLink";
 import { Truculenta } from "next/font/google";
 import { useState } from "react";
-import { handleGithubLogout } from "@/lib/action";
+import { handleLogout } from "@/lib/action";
 
 const Links = ({ session }) => {
   const [open, setOpen] = useState(false);
@@ -29,7 +29,7 @@ const Links = ({ session }) => {
             {session.user?.isAdmin && (
               <NavLink item={{ title: "Admin", path: "/admin" }} />
             )}
-            <form action={handleGithubLogout}>
+            <form action={handleLogout}>
               <button className={styles.logout}>Logout</button>
             </form>
           </>
@@ -61,7 +61,7 @@ const Links = ({ session }) => {
               {session.user?.isAdmin && (
                 <NavLink item={{ title: "Admin", path: "/admin" }} />
               )}
-              <form action={handleGithubLogout}>
+              <form action={handleLogout}>
                 <button className={styles.logout}>Logout</button>
               </form>
             </>

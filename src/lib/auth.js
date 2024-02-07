@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDb } from "./utils";
 import { User } from "./models";
@@ -49,10 +50,24 @@ export const {
         }
       },
     }),
+    Google({
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+    }),
+    CredentialsProvider({
+      async authorize(credentials) {
+        try {
+          const user = await login(credentials);
+          return user;
+        } catch (err) {
+          return null;
+        }
+      },
+    }),
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log(user, account, profile);
+      // console.log(user, account, profile);
       if (account.provider === "github") {
         connectToDb();
         try {
@@ -62,6 +77,24 @@ export const {
               username: profile.login,
               email: profile.email,
               image: profile.avatar_url,
+            });
+
+            await newUser.save();
+          }
+        } catch (err) {
+          console.log(err);
+          return false;
+        }
+      }
+      if (account.provider === "google") {
+        connectToDb();
+        try {
+          const user = await User.findOne({ email: profile.email });
+          if (!user) {
+            const newUser = new User({
+              username: profile.name,
+              email: profile.email,
+              image: profile.picture,
             });
 
             await newUser.save();

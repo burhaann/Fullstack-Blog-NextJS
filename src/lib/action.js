@@ -88,9 +88,13 @@ export const handleGithubLogin = async () => {
   "use server";
   await signIn("github");
 };
-export const handleGithubLogout = async () => {
+export const handleGoogleLogin = async () => {
   "use server";
-  await signOut("github");
+  await signIn("google");
+};
+export const handleLogout = async () => {
+  "use server";
+  await signOut();
 };
 
 export const register = async (prevState, formData) => {
