@@ -12,7 +12,6 @@ pnpm install
 bun install
 ```
 
-
 run the development server:
 
 ```bash
@@ -26,3 +25,29 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Setup .env file
+
+```js
+MONGO=
+AUTH_SECRET=
+AUTH_URL=
+GITHUB_ID=
+GITHUB_SECRET=
+GOOGLE_ID=
+GOOGLE_SECRET=
+```
+
+### Start the app
+
+```shell
+npm run dev
+```
+
+## Available commands
+
+Running commands with npm `npm run [command]`
+
+| command | description                              |
+| :------ | :--------------------------------------- |
+| `dev`   | Starts a development instance of the app |
